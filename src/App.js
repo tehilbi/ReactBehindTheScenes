@@ -6,17 +6,25 @@ import Button from './components/UI/Button/Button';
 
 function App() {
     const [showParagraph, setShowParagraph] = useState();
+    const [allowToggle, setAllowToggle] = useState(false);
 
     console.log('APP RUNNING!');
 
     const toggleParagraphHandler = useCallback(() => {
-        setShowParagraph((prevShowParagraph) => !prevShowParagraph);
-    });
+        if (allowToggle) {
+            setShowParagraph((prevShowParagraph) => !prevShowParagraph);
+        }
+    }, [allowToggle]);
+
+    const allowToggleHandler = () => {
+        setAllowToggle(true);
+    };
 
     return (
         <div className='app'>
             <h1>Hi there!</h1>
-            <DemoOutput show={false} />
+            <DemoOutput show={showParagraph} />
+            <Button onClick={allowToggleHandler}>Allow Toggle!</Button>
             <Button onClick={toggleParagraphHandler}>Show Paragraph!</Button>
         </div>
     );
